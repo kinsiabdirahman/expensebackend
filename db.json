@@ -1,9 +1,63 @@
 {
-  "posts": [
-    { "id": 1, "title": "json-server", "author": "typicode" }
+  "users": [
+    {
+      "id": 1,
+      "name": "Kinsi",
+      "email": "kinsi@example.com"
+    },
+    {
+      "id": 2,
+      "name": "John",
+      "email": "john@example.com"
+    },
+    {
+      "id": 3,
+      "name": "Alice",
+      "email": "alice@example.com"
+    }
   ],
-  "comments": [
-    { "id": 1, "body": "some comment", "postId": 1 }
-  ],
-  "profile": { "name": "typicode" }
+  "expenses": [
+    {
+      "id": 1,
+      "category": "Basic",
+      "description": "Grocery shopping",
+      "amount": 10.0,
+      "date": "2022-02-18"
+    },
+    {
+      "id": 2,
+      "category": "Leisure",
+      "description": "Movie night with friends",
+      "amount": 20.0,
+      "date": "2022-02-19"
+    },
+    {
+      "id": 3,
+      "category": "Savings",
+      "description": "Contributed to emergency fund",
+      "amount": 15.0,
+      "date": "2022-02-20"
+    },
+    {
+      "id": 4,
+      "category": "Basic",
+      "description": "Pharmacy expenses",
+      "amount": 15.0,
+      "date": "2022-03-01"
+    },
+    {
+      "id": 5,
+      "category": "Leisure",
+      "description": "Sports event tickets",
+      "amount": 50.0,
+      "date": "2022-03-02"
+    },
+    {
+      "id": 6,
+      "category": "Savings",
+      "description": "Contributed to investment portfolio",
+      "amount": 28.0,
+      "date": "2022-03-03"
+    }
+  ]
 }
