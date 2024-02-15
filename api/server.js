@@ -1,51 +1,31 @@
-// server.js
+// See https://github.com/typicode/json-server#module
+const jsonServer = require('json-server')
 
-const jsonServer = require("json-server");
-const jwt = require("jsonwebtoken");
+const server = jsonServer.create()
 
-const server = jsonServer.create();
-const router = jsonServer.router("db.json");
-const middlewares = jsonServer.defaults();
+// Uncomment to allow write operations
+// const fs = require('fs')
+// const path = require('path')
+// const filePath = path.join('db.json')
+// const data = fs.readFileSync(filePath, "utf-8");
+// const db = JSON.parse(data);
+// const router = jsonServer.router(db)
 
-const secretKey = "your_secret_key"; // Replace with a secure secret key
-const port = 3001;
+// Comment out to allow write operations
+const router = jsonServer.router('db.json')
 
-server.use(jsonServer.bodyParser);
-server.use(middlewares);
+const middlewares = jsonServer.defaults()
 
-server.post("/login", (req, res) => {
-  const { username, password } = req.body;
+server.use(middlewares)
+// Add this before server.use(router)
+server.use(jsonServer.rewriter({
+    '/api/*': '/$1',
+    '/blog/:resource/:id/show': '/:resource/:id'
+}))
+server.use(router)
+server.listen(3000, () => {
+    console.log('JSON Server is running')
+})
 
-  if (username === "exampleUser" && password === "password") {
-    const token = jwt.sign({ username }, secretKey, { expiresIn: "1h" });
-    res.json({ token });
-  } else {
-    res.status(401).json({ error: "Invalid credentials" });
-  }
-});
-
-server.use((req, res, next) => {
-  if (req.path === "/login") {
-    return next();
-  }
-
-  const token = req.headers.authorization;
-
-  if (!token) {
-    return res.status(401).json({ error: "Unauthorized - Missing token" });
-  }
-
-  try {
-    const decoded = jwt.verify(token, secretKey);
-    req.user = decoded;
-    next();
-  } catch (error) {
-    return res.status(401).json({ error: "Unauthorized - Invalid token" });
-  }
-});
-
-server.use(router);
-
-server.listen(port, () => {
-  console.log(`JSON Server is running on port ${port}`);
-});
+// Export the Server API
+module.exports = server
